@@ -1,0 +1,36 @@
+
+# 定义 stages
+stages:
+  - build
+  - deploy
+
+cache:
+    paths:
+      - node_modules/
+# 定义 job
+build-job:
+  stage: build
+  tags:
+    - demo
+  only: 
+    - tags
+  artifacts:
+      untracked: true
+  script:
+    - cnpm -v 
+    - cnpm i miniprogram-ci -S
+    - cnpm i cross-env
+    - cnpm i 
+    - npm run build:wx-prod
+
+# 定义 job
+deploy-job:
+  stage: deploy
+  tags:
+    - demo
+  only: 
+    - tags
+  script:
+    - npm run ci
+
+
